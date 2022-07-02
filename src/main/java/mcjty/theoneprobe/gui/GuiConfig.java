@@ -40,8 +40,8 @@ public class GuiConfig extends GuiScreen {
     private List<HitBox> hitboxes = Collections.emptyList();
 
     static {
-        presets.add(new Preset("Default style", 0xff999999, 0xff999999, 0x55006699, 2, 0));
         presets.add(new Preset("WAILA style", 0xff5000FF, 0xff28007F, 0xCC100010, 1, 1));
+        presets.add(new Preset("TOP style", 0xff999999, 0xff999999, 0x55006699, 2, 0));
         presets.add(new Preset("Full transparent style", 0x00000000, 0x00000000, 0x00000000, 0, 0));
         presets.add(new Preset("Black & White style", 0xffffffff, 0xffffffff, 0xff000000, 2, 0,
                 Pair.of(MODNAME, "white,italic"),

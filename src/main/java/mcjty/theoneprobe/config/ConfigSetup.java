@@ -75,11 +75,11 @@ public class ConfigSetup {
     public static boolean harvestStyleVanilla = true;
 
     public static int chestContentsBorderColor = 0x80006699;
-    private static int boxBorderColorTop = 0xff999999;
-    private static int boxBorderColorBottom = 0xff999999;
-    private static int boxFillColor = 0x55006699;
-    private static int boxThickness = 2;
-    private static int boxOffset = 0;
+    private static int boxBorderColorTop = 0xff5000FF;
+    private static int boxBorderColorBottom = 0xff28007F;
+    private static int boxFillColor = 0xCC100010;
+    private static int boxThickness = 1;
+    private static int boxOffset = 1;
 
     public static float tooltipScale = 1.0f;
 
