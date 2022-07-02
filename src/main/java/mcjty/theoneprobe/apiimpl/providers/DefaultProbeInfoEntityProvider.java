@@ -65,14 +65,14 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
                 int maxHealth = (int) livingBase.getMaxHealth();
                 int armor = livingBase.getTotalArmorValue();
 
-                probeInfo.progress(health, maxHealth, probeInfo.defaultProgressStyle().lifeBar(true).showText(false).width(150).height(10));
+                probeInfo.progress(health, maxHealth, probeInfo.defaultProgressStyle().lifeBar(true).showText(false).renderBG(true).width(150).height(10));
 
                 if (mode == ProbeMode.EXTENDED) {
                     probeInfo.text(LABEL + "Health: " + INFOIMP + health + " / " + maxHealth);
                 }
 
                 if (armor > 0) {
-                    probeInfo.progress(armor, armor, probeInfo.defaultProgressStyle().armorBar(true).showText(false).width(80).height(10));
+                    probeInfo.progress(armor, armor, probeInfo.defaultProgressStyle().armorBar(true).showText(false).renderBG(true).width(80).height(10));
                 }
             }
 

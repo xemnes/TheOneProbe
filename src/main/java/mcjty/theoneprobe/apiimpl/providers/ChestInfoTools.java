@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.providers;
 
+import com.google.common.collect.Lists;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IProbeConfig;
@@ -12,7 +13,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -46,6 +49,7 @@ public class ChestInfoTools {
                 chestMode = IProbeConfig.ConfigMode.EXTENDED;
             }
         }
+        TileEntity tile = world.getTileEntity(pos);
 
         if (Tools.show(mode, chestMode)) {
             if (stacks == null) {
@@ -53,9 +57,18 @@ public class ChestInfoTools {
                 getChestContents(world, pos, stacks);
             }
 
+            if (tile instanceof TileEntityFurnace) {
+                return;
+            }
+
             if (!stacks.isEmpty()) {
                 boolean showDetailed = Tools.show(mode, config.getShowChestContentsDetailed()) && stacks.size() <= ConfigSetup.showItemDetailThresshold;
-                showChestContents(probeInfo, world, pos, stacks, showDetailed);
+                if (mode == ProbeMode.NORMAL) {
+                    if (stacks.size() >= 5) {
+                        stacks = stacks.subList(0, 5);
+                    }
+                }
+                showChestContents(probeInfo, world, pos, stacks, mode != ProbeMode.NORMAL && showDetailed);
             }
         }
     }
@@ -90,13 +103,13 @@ public class ChestInfoTools {
 
         if (detailed) {
             for (ItemStack stackInSlot : stacks) {
-                horizontal = vertical.horizontal(new LayoutStyle().spacing(10).alignment(ElementAlignment.ALIGN_CENTER));
-                horizontal.item(stackInSlot, new ItemStyle().width(16).height(16))
-                    .text(INFO + stackInSlot.getDisplayName());
+                horizontal = vertical.horizontal(new LayoutStyle().spacing(5).alignment(ElementAlignment.ALIGN_CENTER));
+                horizontal.item(stackInSlot, new ItemStyle().width(20).height(20))
+                    .text(INFO + stackInSlot.getDisplayName() + " ");
             }
         } else {
             for (ItemStack stackInSlot : stacks) {
-                if (idx % 10 == 0) {
+                if (idx % 9 == 0) {
                     horizontal = vertical.horizontal(new LayoutStyle().spacing(0));
                     rows++;
                     if (rows > 4) {

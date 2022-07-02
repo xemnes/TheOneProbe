@@ -74,8 +74,9 @@ public class ConfigSetup {
     public static int showBreakProgress = 1;    // 0 == off, 1 == bar, 2 == text
     public static boolean harvestStyleVanilla = true;
 
-    public static int chestContentsBorderColor = 0xff006699;
-    private static int boxBorderColor = 0xff999999;
+    public static int chestContentsBorderColor = 0x80006699;
+    private static int boxBorderColorTop = 0xff999999;
+    private static int boxBorderColorBottom = 0xff999999;
     private static int boxFillColor = 0x55006699;
     private static int boxThickness = 2;
     private static int boxOffset = 0;
@@ -84,11 +85,13 @@ public class ConfigSetup {
 
     public static int rfbarFilledColor = 0xffdd0000;
     public static int rfbarAlternateFilledColor = 0xff430000;
-    public static int rfbarBorderColor = 0xff555555;
+    public static int rfbarBorderColorTop = 0xff5000FF;
+    public static int rfbarBorderColorBottom = 0xff28007F;
 
-    public static int tankbarFilledColor = 0xff0000dd;
-    public static int tankbarAlternateFilledColor = 0xff000043;
-    public static int tankbarBorderColor = 0xff555555;
+    public static int tankbarFilledColor = 0xff4671f5;
+    public static int tankbarAlternateFilledColor = 0xff4671f5;
+    public static int tankbarBorderColorTop = 0xff5000FF;
+    public static int tankbarBorderColorBottom = 0xff28007F;
 
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses = new HashMap<>();
@@ -130,7 +133,7 @@ public class ConfigSetup {
     public static void init(Configuration cfg) {
         loggingThrowableTimeout = cfg.getInt("loggingThrowableTimeout", CATEGORY_THEONEPROBE, loggingThrowableTimeout, 1, 10000000, "How much time (ms) to wait before reporting an exception again");
         needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
-        extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
+        extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information without the need to sneak");
         supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
         spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
         showCollarColor = cfg.getBoolean("showCollarColor", CATEGORY_THEONEPROBE, showCollarColor, "If true show the color of the collar of a wolf");
@@ -150,10 +153,12 @@ public class ConfigSetup {
         compactEqualStacks = cfg.getBoolean("compactEqualStacks", CATEGORY_THEONEPROBE, compactEqualStacks, "If true equal stacks will be compacted in the chest contents overlay");
         rfbarFilledColor = parseColor(cfg.getString("rfbarFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarFilledColor), "Color for the RF bar"));
         rfbarAlternateFilledColor = parseColor(cfg.getString("rfbarAlternateFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarAlternateFilledColor), "Alternate color for the RF bar"));
-        rfbarBorderColor = parseColor(cfg.getString("rfbarBorderColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarBorderColor), "Color for the RF bar border"));
+        rfbarBorderColorTop = parseColor(cfg.getString("rfbarBorderColorTop", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarBorderColorTop), "Color for the RF bar border top gradient"));
+        rfbarBorderColorBottom = parseColor(cfg.getString("rfbarBorderColorBottom", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarBorderColorBottom), "Color for the RF bar border bottom gradient"));
         tankbarFilledColor = parseColor(cfg.getString("tankbarFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(tankbarFilledColor), "Color for the tank bar"));
         tankbarAlternateFilledColor = parseColor(cfg.getString("tankbarAlternateFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(tankbarAlternateFilledColor), "Alternate color for the tank bar"));
-        tankbarBorderColor = parseColor(cfg.getString("tankbarBorderColor", CATEGORY_THEONEPROBE, Integer.toHexString(tankbarBorderColor), "Color for the tank bar border"));
+        tankbarBorderColorTop = parseColor(cfg.getString("tankbarBorderColorTop", CATEGORY_THEONEPROBE, Integer.toHexString(tankbarBorderColorTop), "Color for the tank bar border top gradient"));
+        tankbarBorderColorBottom = parseColor(cfg.getString("tankbarBorderColorBottom", CATEGORY_THEONEPROBE, Integer.toHexString(tankbarBorderColorBottom), "Color for the tank bar border bottom gradient"));
 
         showItemDetailThresshold = cfg.getInt("showItemDetailThresshold", CATEGORY_THEONEPROBE, showItemDetailThresshold, 0, 20, "If the number of items in an inventory is lower or equal then this number then more info is shown");
         showSmallChestContentsWithoutSneaking = cfg.getInt("showSmallChestContentsWithoutSneaking", CATEGORY_THEONEPROBE, showSmallChestContentsWithoutSneaking, 0, 1000, "The maximum amount of slots (empty or not) to show without sneaking");
@@ -198,7 +203,8 @@ public class ConfigSetup {
         rightX = cfg.getInt("boxRightX", CATEGORY_CLIENT, rightX, -1, 10000, "The distance to the right side of the screen. Use -1 if you don't want to set this");
         topY = cfg.getInt("boxTopY", CATEGORY_CLIENT, topY, -1, 10000, "The distance to the top side of the screen. Use -1 if you don't want to set this");
         bottomY = cfg.getInt("boxBottomY", CATEGORY_CLIENT, bottomY, -1, 10000, "The distance to the bottom side of the screen. Use -1 if you don't want to set this");
-        boxBorderColor = parseColor(cfg.getString("boxBorderColor", CATEGORY_CLIENT, Integer.toHexString(boxBorderColor), "Color of the border of the box (0 to disable)"));
+        boxBorderColorTop = parseColor(cfg.getString("boxBorderColorTop", CATEGORY_CLIENT, Integer.toHexString(boxBorderColorTop), "Color of the top border gradient of the box (0 to disable)"));
+        boxBorderColorBottom = parseColor(cfg.getString("boxBorderColorBottom", CATEGORY_CLIENT, Integer.toHexString(boxBorderColorBottom), "Color of the bottom border gradient of the box (0 to disable)"));
         boxFillColor = parseColor(cfg.getString("boxFillColor", CATEGORY_CLIENT, Integer.toHexString(boxFillColor), "Color of the box (0 to disable)"));
         boxThickness = cfg.getInt("boxThickness", CATEGORY_CLIENT, boxThickness, 0, 20, "Thickness of the border of the box (0 to disable)");
         boxOffset = cfg.getInt("boxOffset", CATEGORY_CLIENT, boxOffset, 0, 20, "How much the border should be offset (i.e. to create an 'outer' border)");
@@ -220,7 +226,7 @@ public class ConfigSetup {
         }
         textStyleClasses = newformat;
 
-        extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_CLIENT, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
+        extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_CLIENT, extendedInMain, "If true the probe will automatically show extended information without the need to sneak");
     }
 
     public static void setTextStyle(TextStyleClass styleClass, String style) {
@@ -280,14 +286,16 @@ public class ConfigSetup {
         updateDefaultOverlayStyle();
     }
 
-    public static void setBoxStyle(int thickness, int borderColor, int fillcolor, int offset) {
+    public static void setBoxStyle(int thickness, int borderColorTop, int borderColorBottom, int fillcolor, int offset) {
         Configuration cfg = mainConfig;
         boxThickness = thickness;
-        boxBorderColor = borderColor;
+        boxBorderColorTop = borderColorTop;
+        boxBorderColorBottom = borderColorBottom;
         boxFillColor = fillcolor;
         boxOffset = offset;
         cfg.get(CATEGORY_CLIENT, "boxThickness", thickness).set(thickness);
-        cfg.get(CATEGORY_CLIENT, "boxBorderColor", Integer.toHexString(borderColor)).set(Integer.toHexString(borderColor));
+        cfg.get(CATEGORY_CLIENT, "boxBorderColorTop", Integer.toHexString(borderColorTop)).set(Integer.toHexString(borderColorTop));
+        cfg.get(CATEGORY_CLIENT, "boxBorderColorBottom", Integer.toHexString(borderColorBottom)).set(Integer.toHexString(borderColorBottom));
         cfg.get(CATEGORY_CLIENT, "boxFillColor", Integer.toHexString(fillcolor)).set(Integer.toHexString(fillcolor));
         cfg.get(CATEGORY_CLIENT, "boxOffset", offset).set(offset);
         cfg.save();
@@ -328,7 +336,8 @@ public class ConfigSetup {
     public static void updateDefaultOverlayStyle() {
         defaultOverlayStyle = new DefaultOverlayStyle()
                 .borderThickness(boxThickness)
-                .borderColor(boxBorderColor)
+                .borderColorTop(boxBorderColorTop)
+                .borderColorBottom(boxBorderColorBottom)
                 .boxColor(boxFillColor)
                 .borderOffset(boxOffset)
                 .location(leftX, rightX, topY, bottomY);

@@ -5,6 +5,7 @@ import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.apiimpl.styles.*;
 import mcjty.theoneprobe.rendering.RenderHelper;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,10 +26,10 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
         if (borderColor != null) {
             int w = getWidth();
             int h = getHeight();
-            RenderHelper.drawHorizontalLine(x, y, x + w - 1, borderColor);
-            RenderHelper.drawHorizontalLine(x, y + h - 1, x + w - 1, borderColor);
-            RenderHelper.drawVerticalLine(x, y, y + h - 1, borderColor);
-            RenderHelper.drawVerticalLine(x + w - 1, y, y + h, borderColor);
+
+            RenderHelper.drawThickBeveledBoxGradient(x, y, x + w -2, y + h -2, 1, RenderHelper.renderColorToHSB(borderColor, 0.8f, 1.0f), borderColor, 0x00ffffff);
+
+
         }
     }
 
@@ -80,6 +81,18 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
     @Override
     public IProbeInfo text(String text, ITextStyle style) {
         children.add(new ElementText(text));
+        return this;
+    }
+
+    @Override
+    public IProbeInfo textSmall(String text) {
+        children.add(new ElementTextSmall(text));
+        return this;
+    }
+
+    @Override
+    public IProbeInfo textSmall(String text, ITextStyle style) {
+        children.add(new ElementTextSmall(text));
         return this;
     }
 

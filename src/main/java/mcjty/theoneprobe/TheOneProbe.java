@@ -40,8 +40,8 @@ public class TheOneProbe {
 
     public static CreativeTabs tabProbe = new CreativeTabs("Probe") {
         @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ModItems.probe);
+        public ItemStack createIcon() {
+            return new ItemStack(ModItems.creativeProbe);
         }
     };
 

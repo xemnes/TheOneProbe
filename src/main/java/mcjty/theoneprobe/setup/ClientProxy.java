@@ -3,7 +3,6 @@ package mcjty.theoneprobe.setup;
 import com.google.common.util.concurrent.ListenableFuture;
 import mcjty.theoneprobe.ClientForgeEventHandlers;
 import mcjty.theoneprobe.commands.CommandTopCfg;
-import mcjty.theoneprobe.commands.CommandTopNeed;
 import mcjty.theoneprobe.keys.KeyBindings;
 import mcjty.theoneprobe.keys.KeyInputHandler;
 import net.minecraft.client.Minecraft;
@@ -27,7 +26,6 @@ public class ClientProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent e) {
         ClientCommandHandler.instance.registerCommand(new CommandTopCfg());
-        ClientCommandHandler.instance.registerCommand(new CommandTopNeed());
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
         KeyBindings.init();
     }

@@ -5,7 +5,8 @@ import mcjty.theoneprobe.api.IOverlayStyle;
 public class DefaultOverlayStyle implements IOverlayStyle {
 
     private int borderThickness;
-    private int borderColor;
+    private int borderColorTop;
+    private int borderColorBottom;
     private int boxColor;
     private int borderOffset;
     private int leftX;
@@ -16,7 +17,8 @@ public class DefaultOverlayStyle implements IOverlayStyle {
     public IOverlayStyle copy() {
         return new DefaultOverlayStyle()
                 .borderThickness(borderThickness)
-                .borderColor(borderColor)
+                .borderColorTop(borderColorTop)
+                .borderColorBottom(borderColorBottom)
                 .boxColor(boxColor)
                 .borderOffset(borderOffset)
                 .location(leftX, rightX, topY, bottomY);
@@ -45,14 +47,25 @@ public class DefaultOverlayStyle implements IOverlayStyle {
     }
 
     @Override
-    public IOverlayStyle borderColor(int color) {
-        borderColor = color;
+    public IOverlayStyle borderColorTop(int color) {
+        borderColorTop = color;
         return this;
     }
 
     @Override
-    public int getBorderColor() {
-        return borderColor;
+    public IOverlayStyle borderColorBottom(int color) {
+        borderColorBottom = color;
+        return this;
+    }
+
+    @Override
+    public int getBorderColorTop() {
+        return borderColorTop;
+    }
+
+    @Override
+    public int getBorderColorBottom() {
+        return borderColorBottom;
     }
 
     @Override

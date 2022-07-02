@@ -3,7 +3,6 @@ package mcjty.theoneprobe;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.config.ConfigSetup;
 import mcjty.theoneprobe.gui.GuiConfig;
-import mcjty.theoneprobe.gui.GuiNote;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.keys.KeyBindings;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
@@ -28,7 +27,7 @@ public class ClientForgeEventHandlers {
     public void onGuiOpen(GuiOpenEvent event) {
         if (ignoreNextGuiClose) {
             GuiScreen current = Minecraft.getMinecraft().currentScreen;
-            if (event.getGui() == null && (current instanceof GuiConfig || current instanceof GuiNote)) {
+            if (event.getGui() == null && (current instanceof GuiConfig)) {
                 ignoreNextGuiClose = false;
                 // We don't want our gui to be closed for a new 'null' guil
                 event.setCanceled(true);
@@ -73,9 +72,7 @@ public class ClientForgeEventHandlers {
     private ProbeMode getModeForPlayer() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (ConfigSetup.extendedInMain) {
-            if (hasItemInMainHand(ModItems.probe)) {
-                return ProbeMode.EXTENDED;
-            }
+           return ProbeMode.EXTENDED;
         }
         return player.isSneaking() ? ProbeMode.EXTENDED : ProbeMode.NORMAL;
     }

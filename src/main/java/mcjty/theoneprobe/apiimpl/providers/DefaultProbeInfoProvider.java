@@ -201,7 +201,8 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                             .suffix("mB")
                             .filledColor(ConfigSetup.tankbarFilledColor)
                             .alternateFilledColor(ConfigSetup.tankbarAlternateFilledColor)
-                            .borderColor(ConfigSetup.tankbarBorderColor)
+                            .borderColorTop(ConfigSetup.tankbarBorderColorTop)
+                            .borderColorBottom(ConfigSetup.tankbarBorderColorBottom)
                             .numberFormat(ConfigSetup.tankFormat));
         } else {
             probeInfo.text(PROGRESS + ElementProgress.format(contents, ConfigSetup.tankFormat, "mB"));
@@ -238,7 +239,8 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                             .suffix("RF")
                             .filledColor(ConfigSetup.rfbarFilledColor)
                             .alternateFilledColor(ConfigSetup.rfbarAlternateFilledColor)
-                            .borderColor(ConfigSetup.rfbarBorderColor)
+                            .borderColorTop(ConfigSetup.rfbarBorderColorTop)
+                            .borderColorBottom(ConfigSetup.rfbarBorderColorBottom)
                             .numberFormat(ConfigSetup.rfFormat));
         } else {
             probeInfo.text(PROGRESS + "RF: " + ElementProgress.format(energy, ConfigSetup.rfFormat, "RF"));
@@ -320,6 +322,6 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
     }
 
     private static String getBlockUnlocalizedName(Block block) {
-        return STARTLOC + block.getUnlocalizedName() + ".name" + ENDLOC;
+        return STARTLOC + block.getTranslationKey() + ".name" + ENDLOC;
     }
 }

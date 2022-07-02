@@ -40,10 +40,10 @@ public class GuiConfig extends GuiScreen {
     private List<HitBox> hitboxes = Collections.emptyList();
 
     static {
-        presets.add(new Preset("Default style", 0xff999999, 0x55006699, 2, 0));
-        presets.add(new Preset("WAILA style", 0xff4503d0, 0xff000000, 1, 1));
-        presets.add(new Preset("Full transparent style", 0x00000000, 0x00000000, 0, 0));
-        presets.add(new Preset("Black & White style", 0xffffffff, 0xff000000, 2, 0,
+        presets.add(new Preset("Default style", 0xff999999, 0xff999999, 0x55006699, 2, 0));
+        presets.add(new Preset("WAILA style", 0xff5000FF, 0xff28007F, 0xCC100010, 1, 1));
+        presets.add(new Preset("Full transparent style", 0x00000000, 0x00000000, 0x00000000, 0, 0));
+        presets.add(new Preset("Black & White style", 0xffffffff, 0xffffffff, 0xff000000, 2, 0,
                 Pair.of(MODNAME, "white,italic"),
                 Pair.of(NAME, "white,bold"),
                 Pair.of(INFO, "white"),
@@ -151,7 +151,7 @@ public class GuiConfig extends GuiScreen {
     }
 
     private void applyPreset(Preset preset) {
-        ConfigSetup.setBoxStyle(preset.getBoxThickness(), preset.getBoxBorderColor(), preset.getBoxFillColor(), preset.getBoxOffset());
+        ConfigSetup.setBoxStyle(preset.getBoxThickness(), preset.getBoxBorderColorTop(), preset.getBoxBorderColorBottom(), preset.getBoxFillColor(), preset.getBoxOffset());
 
         for (Map.Entry<TextStyleClass, String> entry : ConfigSetup.defaultTextStyleClasses.entrySet()) {
             ConfigSetup.setTextStyle(entry.getKey(), entry.getValue());
@@ -243,9 +243,9 @@ public class GuiConfig extends GuiScreen {
             int x2 = x + w - 1;
             int y2 = y + h - 1;
             if (offset > 0) {
-                RenderHelper.drawThickBeveledBox(x, y, x2, y2, thick, style.getBoxColor(), style.getBoxColor(), style.getBoxColor());
+                RenderHelper.drawOutlineBox(x, y, x + w-1, y + h-1, thick, style.getBoxColor());
             }
-            RenderHelper.drawThickBeveledBox(x+offset, y+offset, x2-offset, y2-offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
+            RenderHelper.drawThickBeveledBoxGradient(x+offset, y+offset, x2-offset, y2-offset, thick, style.getBorderColorTop(), style.getBorderColorBottom(), style.getBoxColor());
         }
 
         if (!Minecraft.getMinecraft().isGamePaused()) {

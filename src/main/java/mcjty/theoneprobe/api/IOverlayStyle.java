@@ -24,9 +24,11 @@ public interface IOverlayStyle {
      * You can use alpha if you want transparency. For example
      * 0xFFFFFFFF is pure white, 0x22FF0000 is a very faint transparent red.
      */
-    IOverlayStyle borderColor(int color);
+    IOverlayStyle borderColorTop(int color);
+    IOverlayStyle borderColorBottom(int color);
 
-    int getBorderColor();
+    int getBorderColorTop();
+    int getBorderColorBottom();
 
     /**
      * The color of the box.

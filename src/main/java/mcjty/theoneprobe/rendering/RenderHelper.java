@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 
 public class RenderHelper {
     public static float rot = 0.0f;
@@ -129,6 +130,36 @@ public class RenderHelper {
         }
 
         return rc;
+    }
+
+    public static void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor) {
+        float zLevel = 0.0F;
+
+        float f = (float) (startColor >> 24 & 255) / 255.0F;
+        float f1 = (float) (startColor >> 16 & 255) / 255.0F;
+        float f2 = (float) (startColor >> 8 & 255) / 255.0F;
+        float f3 = (float) (startColor & 255) / 255.0F;
+        float f4 = (float) (endColor >> 24 & 255) / 255.0F;
+        float f5 = (float) (endColor >> 16 & 255) / 255.0F;
+        float f6 = (float) (endColor >> 8 & 255) / 255.0F;
+        float f7 = (float) (endColor & 255) / 255.0F;
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.shadeModel(7425);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos((double) (left + right), (double) top, (double) zLevel).color(f1, f2, f3, f).endVertex();
+        buffer.pos((double) left, (double) top, (double) zLevel).color(f1, f2, f3, f).endVertex();
+        buffer.pos((double) left, (double) (top + bottom), (double) zLevel).color(f5, f6, f7, f4).endVertex();
+        buffer.pos((double) (left + right), (double) (top + bottom), (double) zLevel).color(f5, f6, f7, f4).endVertex();
+        tessellator.draw();
+        GlStateManager.shadeModel(7424);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableTexture2D();
     }
 
     /**
@@ -280,6 +311,24 @@ public class RenderHelper {
         Gui.drawRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor);
         Gui.drawRect(x2 - thickness, y1, x2, y2 - 1, botrightcolor);
         Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
+    }
+
+    public static void drawThickBeveledBoxGradient(int x1, int y1, int x2, int y2, int thickness, int topleftcolor, int botrightcolor, int fillcolor) {
+        if (fillcolor != -1) {
+            Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
+        }
+        Gui.drawRect(x1, y1, x2 - 1, y1 + thickness, topleftcolor);
+        drawVerticalGradientRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor, botrightcolor);
+        drawVerticalGradientRect(x2 - thickness, y1, x2, y2 - 1, topleftcolor, botrightcolor);
+        Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
+    }
+
+    public static void drawOutlineBox(int x1, int y1, int x2, int y2, int thickness, int fillcolor) {
+
+        Gui.drawRect(x1 + 1, y1, x2 - 1, y1 + thickness, fillcolor);
+        Gui.drawRect(x1, y1 + 1 , x1 + thickness, y2 - 1, fillcolor);
+        Gui.drawRect(x2 - thickness, y1 + 1, x2, y2 - 1, fillcolor);
+        Gui.drawRect(x1 + 1, y2 - thickness, x2 - 1, y2, fillcolor);
     }
 
     /**
@@ -580,6 +629,216 @@ public class RenderHelper {
         return width;
     }
 
+    public static int renderText(Minecraft mc, int x, int y, String txt, int color) {
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, 0.0F, 32.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.enableLighting();
+        net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableBlend();
+        int width = mc.fontRenderer.getStringWidth(txt);
+        mc.fontRenderer.drawStringWithShadow(txt, x, y, color);
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        // Fixes opaque cooldown overlay a bit lower
+        // TODO: check if enabled blending still screws things up down the line.
+        GlStateManager.enableBlend();
+
+
+        GlStateManager.popMatrix();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableLighting();
+
+        return width;
+    }
+
+    /**
+     * renders text at half its size
+     */
+    public static int renderSmallText(Minecraft mc, int x, int y, String txt) {
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, 0.0F, 32.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.scale(0.5F, 0.5F, 1.0F);
+        GlStateManager.enableLighting();
+        net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableBlend();
+        int width = mc.fontRenderer.getStringWidth(txt) / 2;
+        mc.fontRenderer.drawStringWithShadow(txt, x * 2 , y * 2, 16777215);
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        // Fixes opaque cooldown overlay a bit lower
+        // TODO: check if enabled blending still screws things up down the line.
+        GlStateManager.enableBlend();
+
+
+        GlStateManager.popMatrix();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableLighting();
+
+        return width;
+    }
+
+    /**
+     * renders text at half its size
+     */
+    public static int renderSmallText(Minecraft mc, int x, int y, String txt, int color) {
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, 0.0F, 32.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.scale(0.5F, 0.5F, 1.0F);
+        GlStateManager.enableLighting();
+        net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableBlend();
+        int width = mc.fontRenderer.getStringWidth(txt) / 2;
+        mc.fontRenderer.drawStringWithShadow(txt, x * 2 , y * 2, color);
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        // Fixes opaque cooldown overlay a bit lower
+        // TODO: check if enabled blending still screws things up down the line.
+        GlStateManager.enableBlend();
+
+
+        GlStateManager.popMatrix();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableLighting();
+
+        return width;
+    }
+
+    /**
+     * basic colour rendering, converts rgb to hexadecimal
+     */
+    public static void renderColor(int color) {
+
+        float r = (color >> 16 & 255) / 255.0F;
+        float g = (color >> 8 & 255) / 255.0F;
+        float b = (color & 255) / 255.0F;
+        float a = (color >> 24 & 255) / 255.0F;
+
+        GlStateManager.color(r, g, b, a);
+    }
+
+    /**
+     * colour brightening,
+     * specifically used for certain coloured progress bars that have overlay text that is too illegible.
+     */
+    public static int renderBarTextColor(int color) {
+        Color c = new Color(color);
+        float[] hsb = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), null);
+
+        //almost black
+        if (hsb[2] <= 0.13f) {
+            return new Color(color).brighter().brighter().brighter().brighter().hashCode();
+        }
+        //lighter black
+        if (hsb[2] > 0.13f && hsb[2] <= 0.2f) {
+            return new Color(color).brighter().brighter().brighter().hashCode();
+        }
+        //lighter black
+        if (hsb[2] > 0.2f && hsb[2] <= 0.3f) {
+            return new Color(color).brighter().brighter().hashCode();
+        }
+        //lighter black
+        if (hsb[2] > 0.3f && hsb[2] <= 0.4f) {
+            return new Color(color).brighter().hashCode();
+        }
+        //fallback
+        else return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+    }
+
+    /**
+     * colour brightening,
+     * specifically used for progress bars
+     */
+    public static int renderBarColor(int color) {
+        Color c = new Color(color);
+        float[] hsb = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), null);
+
+        //almost black
+        if (hsb[2] <= 0.13f) {
+            return new Color(color).brighter().brighter().brighter().hashCode();
+        }
+        //lighter black
+        if (hsb[2] > 0.13f && hsb[2] <= 0.2f) {
+            return new Color(color).brighter().brighter().hashCode();
+        }
+        //lighter black
+        if (hsb[2] > 0.2f && hsb[2] <= 0.3f) {
+            return new Color(color).brighter().hashCode();
+        }
+        //fallback
+        else return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+    }
+
+    /**
+     * better colour brightening,
+     * converts hexadecimal from rgb to hsb colour space.
+     * useful for properly brightnening and saturating colours.
+     * attempts to automatically brighten colours based on input colour
+     */
+    public static int renderColorToHSB(int color, float saturation, float brightness) {
+        Color c = new Color(color);
+        float[] hsb = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), null);
+        //most greys
+        if (hsb[1] < 0.05f && hsb[2] >= 0.2f) {
+            return new Color(color).brighter().hashCode();
+        }
+        //almost black
+        if (hsb[1] < 0.05f && hsb[2] < 0.2f) {
+            return new Color(color).brighter().brighter().brighter().hashCode();
+        }
+        //light almost grey
+        else if (hsb[1] < 0.2f && hsb[2] > 0.8f) {
+            return Color.HSBtoRGB(hsb[0], hsb[1] - 0.1f, hsb[2] + 0.1f);
+        }
+        //others
+        else if (hsb[2] == 1.0f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2]);
+        }
+        else if (hsb[2] == 0.9f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2] + 0.1f);
+        }
+        else if (hsb[2] == 0.8f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2] + 0.2f);
+        }
+        else if (hsb[2] == 0.7f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2] + 0.3f);
+        }
+        else if (hsb[2] == 0.6f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2] + 0.3f);
+        }
+        else if (hsb[2] < 0.6f) {
+            return Color.HSBtoRGB(hsb[0], saturation, hsb[2] + 0.4f);
+        }
+        //fallback
+        else return Color.HSBtoRGB(hsb[0], saturation, brightness);
+    }
+
+    /**
+     * simple colour brightening,
+     * saturates the colour, doesnt actually 'brighten'
+     */
+    public static int renderColorBrighter(int color, int amount) {
+       return new Color(Math.min(color | ((amount & 255) << 16) | ((amount & 255) << 8) | (amount & 255), 16777215)).brighter().hashCode();
+    }
+
     public static class Vector {
         public final float x;
         public final float y;
@@ -631,6 +890,5 @@ public class RenderHelper {
     private static Vector Mul(Vector a, float f) {
         return new Vector(a.x * f, a.y * f, a.z * f);
     }
-
 
 }

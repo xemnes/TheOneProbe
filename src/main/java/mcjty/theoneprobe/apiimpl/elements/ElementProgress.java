@@ -31,14 +31,17 @@ public class ElementProgress implements IElement {
                 .height(buf.readInt())
                 .prefix(NetworkTools.readStringUTF8(buf))
                 .suffix(NetworkTools.readStringUTF8(buf))
-                .borderColor(buf.readInt())
+                .borderColorTop(buf.readInt())
+                .borderColorBottom(buf.readInt())
                 .filledColor(buf.readInt())
                 .alternateFilledColor(buf.readInt())
                 .backgroundColor(buf.readInt())
                 .showText(buf.readBoolean())
+                .renderBG(buf.readBoolean())
                 .numberFormat(NumberFormat.values()[buf.readByte()])
                 .lifeBar(buf.readBoolean())
-                .armorBar(buf.readBoolean());
+                .armorBar(buf.readBoolean())
+                .arrowBar(buf.readBoolean());
     }
 
     private static DecimalFormat dfCommas = new DecimalFormat("###,###");
@@ -53,21 +56,21 @@ public class ElementProgress implements IElement {
             case COMPACT: {
                 int unit = 1000;
                 if (in < unit) {
-                    return Long.toString(in) + " " + suffix;
+                    return Long.toString(in) + "" + suffix;
                 }
                 int exp = (int) (Math.log(in) / Math.log(unit));
                 char pre;
                 if (suffix.startsWith("m")) {
                     suffix = suffix.substring(1);
                     if (exp - 2 >= 0) {
-                        pre = "kMGTPE".charAt(exp - 2);
-                        return String.format("%.1f %s", in / Math.pow(unit, exp), pre) + suffix;
+                        pre = "kMBTPE".charAt(exp - 2);
+                        return String.format("%.1f%s", in / Math.pow(unit, exp), pre) + suffix;
                     } else {
-                        return String.format("%.1f %s", in / Math.pow(unit, exp), suffix);
+                        return String.format("%.1f%s", in / Math.pow(unit, exp), suffix);
                     }
                 } else {
-                    pre = "kMGTPE".charAt(exp - 1);
-                    return String.format("%.1f %s", in / Math.pow(unit, exp), pre) + suffix;
+                    pre = "kMBTPE".charAt(exp - 1);
+                    return String.format("%.1f%s", in / Math.pow(unit, exp), pre) + suffix;
                 }
             }
             case COMMAS:
@@ -108,14 +111,17 @@ public class ElementProgress implements IElement {
         buf.writeInt(style.getHeight());
         NetworkTools.writeStringUTF8(buf, style.getPrefix());
         NetworkTools.writeStringUTF8(buf, style.getSuffix());
-        buf.writeInt(style.getBorderColor());
+        buf.writeInt(style.getBorderColorTop());
+        buf.writeInt(style.getBorderColorBottom());
         buf.writeInt(style.getFilledColor());
         buf.writeInt(style.getAlternatefilledColor());
         buf.writeInt(style.getBackgroundColor());
         buf.writeBoolean(style.isShowText());
+        buf.writeBoolean(style.isRenderBG());
         buf.writeByte(style.getNumberFormat().ordinal());
         buf.writeBoolean(style.isLifeBar());
         buf.writeBoolean(style.isArmorBar());
+        buf.writeBoolean(style.isArrowBar());
     }
 
     @Override

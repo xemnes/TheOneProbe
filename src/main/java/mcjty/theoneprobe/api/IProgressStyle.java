@@ -5,7 +5,8 @@ package mcjty.theoneprobe.api;
  */
 public interface IProgressStyle {
     /// The color that is used for the border of the progress bar
-    IProgressStyle borderColor(int c);
+    IProgressStyle borderColorTop(int c);
+    IProgressStyle borderColorBottom(int c);
 
     /// The color that is used for the background of the progress bar
     IProgressStyle backgroundColor(int c);
@@ -18,6 +19,9 @@ public interface IProgressStyle {
 
     /// If true then text is shown inside the progress bar
     IProgressStyle showText(boolean b);
+
+    /// If true then background is rendered
+    IProgressStyle renderBG(boolean b);
 
     /// The number format to use for the text inside the progress bar
     IProgressStyle numberFormat(NumberFormat f);
@@ -35,7 +39,10 @@ public interface IProgressStyle {
     
     IProgressStyle armorBar(boolean b);
 
-    int getBorderColor();
+    IProgressStyle arrowBar(boolean b);
+
+    int getBorderColorTop();
+    int getBorderColorBottom();
 
     int getBackgroundColor();
 
@@ -44,6 +51,7 @@ public interface IProgressStyle {
     int getAlternatefilledColor();
 
     boolean isShowText();
+    boolean isRenderBG();
 
     NumberFormat getNumberFormat();
 
@@ -58,4 +66,6 @@ public interface IProgressStyle {
     boolean isLifeBar();
 
     boolean isArmorBar();
+
+    boolean isArrowBar();
 }

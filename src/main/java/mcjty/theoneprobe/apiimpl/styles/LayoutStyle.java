@@ -8,6 +8,7 @@ import mcjty.theoneprobe.api.ILayoutStyle;
  */
 public class LayoutStyle implements ILayoutStyle {
     private Integer borderColor = null;
+    private Integer borderColor2 = null;
     private ElementAlignment alignment = ElementAlignment.ALIGN_TOPLEFT;
     private int spacing = -1;
 

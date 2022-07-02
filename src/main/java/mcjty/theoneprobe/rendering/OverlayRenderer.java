@@ -97,7 +97,7 @@ public class OverlayRenderer {
         EntityPlayerSP entity = Minecraft.getMinecraft().player;
         Vec3d start  = entity.getPositionEyes(partialTicks);
         Vec3d vec31 = entity.getLook(partialTicks);
-        Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
+        Vec3d end = start.add(vec31.x * dist, vec31.y * dist, vec31.z * dist);
 
         mouseOver = entity.getEntityWorld().rayTraceBlocks(start, end, ConfigSetup.showLiquids);
         if (mouseOver == null) {
@@ -232,7 +232,8 @@ public class OverlayRenderer {
                             .prefix("Progress ")
                             .suffix("%")
                             .width(85)
-                            .borderColor(0)
+                            .borderColorTop(0)
+                            .borderColorBottom(0)
                             .filledColor(0)
                             .filledColor(0xff990000)
                             .alternateFilledColor(0xff550000));
@@ -421,9 +422,9 @@ public class OverlayRenderer {
 
         if (thick > 0) {
             if (offset > 0) {
-                RenderHelper.drawThickBeveledBox(x, y, x + w-1, y + h-1, thick, style.getBoxColor(), style.getBoxColor(), style.getBoxColor());
+                RenderHelper.drawOutlineBox(x, y, x + w-1, y + h-1, thick, style.getBoxColor());
             }
-            RenderHelper.drawThickBeveledBox(x+offset, y+offset, x + w-1-offset, y + h-1-offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
+            RenderHelper.drawThickBeveledBoxGradient(x+offset, y+offset, x + w-1-offset, y + h-1-offset, thick, style.getBorderColorTop(), style.getBorderColorBottom(), style.getBoxColor());
         }
 
         if (!Minecraft.getMinecraft().isGamePaused()) {

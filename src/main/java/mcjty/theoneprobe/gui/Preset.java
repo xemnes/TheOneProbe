@@ -8,16 +8,18 @@ import java.util.Map;
 
 class Preset {
     private final String name;
-    private final int boxBorderColor;
+    private final int boxBorderColorTop;
+    private final int boxBorderColorBottom;
     private final int boxFillColor;
     private final int boxThickness;
     private final int boxOffset;
     private final Map<TextStyleClass, String> textStyleClasses;
 
     @SafeVarargs
-    public Preset(String name, int boxBorderColor, int boxFillColor, int boxThickness, int boxOffset, Pair<TextStyleClass, String>... styles) {
+    public Preset(String name, int boxBorderColorTop, int boxBorderColorBottom, int boxFillColor, int boxThickness, int boxOffset, Pair<TextStyleClass, String>... styles) {
         this.name = name;
-        this.boxBorderColor = boxBorderColor;
+        this.boxBorderColorTop = boxBorderColorTop;
+        this.boxBorderColorBottom = boxBorderColorBottom;
         this.boxFillColor = boxFillColor;
         this.boxThickness = boxThickness;
         this.boxOffset = boxOffset;
@@ -31,8 +33,12 @@ class Preset {
         return name;
     }
 
-    public int getBoxBorderColor() {
-        return boxBorderColor;
+    public int getBoxBorderColorTop() {
+        return boxBorderColorTop;
+    }
+
+    public int getBoxBorderColorBottom() {
+        return boxBorderColorBottom;
     }
 
     public int getBoxFillColor() {

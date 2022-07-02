@@ -10,6 +10,7 @@ import java.util.*;
 public class TheOneProbeImp implements ITheOneProbe {
 
     public static int ELEMENT_TEXT;
+    public static int ELEMENT_TEXT_SMALL;
     public static int ELEMENT_ITEM;
     public static int ELEMENT_PROGRESS;
     public static int ELEMENT_HORIZONTAL;
@@ -32,6 +33,7 @@ public class TheOneProbeImp implements ITheOneProbe {
 
     public static void registerElements() {
         ELEMENT_TEXT = TheOneProbe.theOneProbeImp.registerElementFactory(ElementText::new);
+        ELEMENT_TEXT_SMALL = TheOneProbe.theOneProbeImp.registerElementFactory(ElementTextSmall::new);
         ELEMENT_ITEM = TheOneProbe.theOneProbeImp.registerElementFactory(ElementItemStack::new);
         ELEMENT_PROGRESS = TheOneProbe.theOneProbeImp.registerElementFactory(ElementProgress::new);
         ELEMENT_HORIZONTAL = TheOneProbe.theOneProbeImp.registerElementFactory(ElementHorizontal::new);

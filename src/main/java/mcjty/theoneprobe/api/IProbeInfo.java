@@ -74,6 +74,8 @@ public interface IProbeInfo {
      */
     IProbeInfo text(String text, ITextStyle style);
     IProbeInfo text(String text);
+    IProbeInfo textSmall(String text, ITextStyle style);
+    IProbeInfo textSmall(String text);
 
     IProbeInfo item(ItemStack stack, IItemStyle style);
     IProbeInfo item(ItemStack stack);

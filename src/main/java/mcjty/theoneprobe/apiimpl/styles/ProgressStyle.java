@@ -7,24 +7,33 @@ import mcjty.theoneprobe.api.NumberFormat;
  * Style for the progress bar.
  */
 public class ProgressStyle implements IProgressStyle {
-    private int borderColor = 0xffffffff;
+    private int borderColorTop = 0xff5000FF;
+    private int borderColorBottom = 0xff28007F;
     private int backgroundColor = 0xff000000;
     private int filledColor = 0xffaaaaaa;
     private int alternatefilledColor = 0xffaaaaaa;
     private boolean showText = true;
+    private boolean renderBG = true;
     private String prefix = "";
     private String suffix = "";
     private int width = 100;
-    private int height = 12;
+    private int height = 14;
     private boolean lifeBar = false;
     private boolean armorBar = false;
+    private boolean arrowBar = false;
 
     private NumberFormat numberFormat = NumberFormat.FULL;
 
     /// The color that is used for the border of the progress bar
     @Override
-    public ProgressStyle borderColor(int c) {
-        borderColor = c;
+    public ProgressStyle borderColorTop(int c) {
+        borderColorTop = c;
+        return this;
+    }
+
+    @Override
+    public ProgressStyle borderColorBottom(int c) {
+        borderColorBottom = c;
         return this;
     }
 
@@ -53,6 +62,13 @@ public class ProgressStyle implements IProgressStyle {
     @Override
     public ProgressStyle showText(boolean b) {
         showText = b;
+        return this;
+    }
+
+    /// If true then background will be rendered
+    @Override
+    public ProgressStyle renderBG(boolean b) {
+        renderBG = b;
         return this;
     }
 
@@ -100,8 +116,17 @@ public class ProgressStyle implements IProgressStyle {
     }
 
     @Override
-    public int getBorderColor() {
-        return borderColor;
+    public IProgressStyle arrowBar(boolean b) {
+        this.arrowBar = b;
+        return this;
+    }
+
+    @Override
+    public int getBorderColorTop() {
+        return borderColorTop;
+    }
+    public int getBorderColorBottom() {
+        return borderColorBottom;
     }
 
     @Override
@@ -122,6 +147,11 @@ public class ProgressStyle implements IProgressStyle {
     @Override
     public boolean isShowText() {
         return showText;
+    }
+
+    @Override
+    public boolean isRenderBG() {
+        return renderBG;
     }
 
     @Override
@@ -157,5 +187,10 @@ public class ProgressStyle implements IProgressStyle {
     @Override
     public boolean isArmorBar() {
         return armorBar;
+    }
+
+    @Override
+    public boolean isArrowBar() {
+        return arrowBar;
     }
 }
