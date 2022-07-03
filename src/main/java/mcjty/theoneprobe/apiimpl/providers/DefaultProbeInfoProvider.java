@@ -6,6 +6,7 @@ import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
+import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
 import mcjty.theoneprobe.compat.TeslaTools;
 import mcjty.theoneprobe.config.ConfigSetup;
@@ -290,7 +291,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                     horizontal.icon(fluid.getStill(), -1, -1, 16, 16, probeInfo.defaultIconStyle().width(20));
                 }
 
-                horizontal.vertical()
+                horizontal.vertical(probeInfo.defaultLayoutStyle().spacing(0))
                         .text(NAME + fluidStack.getLocalizedName())
                         .text(MODNAME + modid);
                 return;
@@ -301,7 +302,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             if (Tools.show(mode, config.getShowModName())) {
                 probeInfo.horizontal()
                         .item(pickBlock)
-                        .vertical()
+                        .vertical(probeInfo.defaultLayoutStyle().spacing(0))
                         .itemLabel(pickBlock)
                         .text(MODNAME + modid);
             } else {
@@ -311,7 +312,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             }
         } else {
             if (Tools.show(mode, config.getShowModName())) {
-                probeInfo.vertical()
+                probeInfo.vertical(probeInfo.defaultLayoutStyle().spacing(0))
                         .text(NAME + getBlockUnlocalizedName(block))
                         .text(MODNAME + modid);
             } else {

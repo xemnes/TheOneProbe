@@ -35,7 +35,7 @@ public class ConfigSetup {
     public static final int PROBE_NEEDED = 1;
     public static final int PROBE_NEEDEDHARD = 2;
     public static final int PROBE_NEEDEDFOREXTENDED = 3;
-    public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
+    public static int needsProbe = PROBE_NOTNEEDED;
 
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
@@ -48,8 +48,8 @@ public class ConfigSetup {
     public static boolean spawnNote = true;
 
     // Chest related settings
-    public static int showSmallChestContentsWithoutSneaking = 0;
-    public static int showItemDetailThresshold = 4;
+    public static int showSmallChestContentsWithoutSneaking = 5;
+    public static int showItemDetailThresshold = 5;
     public static String[] showContentsWithoutSneaking = { "storagedrawers:basicDrawers", "storagedrawersextra:extra_drawers" };
     public static String[] dontShowContentsUnlessSneaking = {};
     public static String[] dontSendNBT = { };
@@ -58,7 +58,7 @@ public class ConfigSetup {
     private static Set<ResourceLocation> inventoriesToNotShow = null;
     private static Set<ResourceLocation> dontSendNBTSet = null;
 
-    public static float probeDistance = 6;
+    public static float probeDistance = 5;
     public static boolean showLiquids = false;
     public static boolean isVisible = true;
     public static boolean compactEqualStacks = true;
@@ -71,7 +71,7 @@ public class ConfigSetup {
     private static int rightX = -1;
     private static int bottomY = -1;
 
-    public static int showBreakProgress = 1;    // 0 == off, 1 == bar, 2 == text
+    public static int showBreakProgress = 0;    // 0 == off, 1 == bar, 2 == text
     public static boolean harvestStyleVanilla = true;
 
     public static int chestContentsBorderColor = 0x80006699;

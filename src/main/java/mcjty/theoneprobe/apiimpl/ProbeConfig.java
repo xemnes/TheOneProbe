@@ -11,11 +11,11 @@ public class ProbeConfig implements IProbeConfig {
     private int showRF = 1;
     private int showTank = 1;
 
-    private IProbeConfig.ConfigMode showHarvestLevel = NORMAL;
+    private IProbeConfig.ConfigMode showHarvestLevel = EXTENDED;
     private IProbeConfig.ConfigMode showCanBeHarvested = NORMAL;
     private IProbeConfig.ConfigMode showModName = NORMAL;
     private IProbeConfig.ConfigMode showCropPercentage = NORMAL;
-    private IProbeConfig.ConfigMode showChestContents = EXTENDED;
+    private IProbeConfig.ConfigMode showChestContents = NORMAL;
     private IProbeConfig.ConfigMode showChestContentsDetailed = EXTENDED;
     private IProbeConfig.ConfigMode showRedstone = NORMAL;
     private IProbeConfig.ConfigMode showMobHealth = NORMAL;
